@@ -1,15 +1,24 @@
-local scripts = {
+local urls = {
     "https://raw.githubusercontent.com/Memito89/TheUltimateStealABrainrotPackageOfScripts/refs/heads/main/Dex%20Finder.lua",
     "https://raw.githubusercontent.com/Memito89/TheUltimateStealABrainrotPackageOfScripts/refs/heads/main/Ikura%20Hub"
 }
 
-for _, url in ipairs(scripts) do
+-- Download both scripts concurrently first
+for _, url in ipairs(urls) do
     task.spawn(function()
-        local success, err = pcall(function()
-            loadstring(game:HttpGet(url))()
+        local success, code = pcall(function()
+            return game:HttpGetAsync(url)
         end)
-        if not success then
-            warn("Failed to execute script from URL: " .. url .. "\nError: " .. tostring(err))
+        
+        if success and code then
+            local func, err = loadstring(code)
+            if func then
+                task.spawn(func) -- Execute immediately upon download complete
+            else
+                warn("Failed to compile code from: " .. url .. "\nError: " .. tostring(err))
+            end
+        else
+            warn("Failed to download script from: " .. url)
         end
     end)
 end
