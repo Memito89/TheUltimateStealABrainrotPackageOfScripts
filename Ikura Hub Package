@@ -1,9 +1,9 @@
 local urls = {
-    "https://raw.githubusercontent.com/Memito89/TheUltimateStealABrainrotPackageOfScripts/refs/heads/main/Dex%20Finder.lua",
-    "https://raw.githubusercontent.com/Memito89/TheUltimateStealABrainrotPackageOfScripts/refs/heads/main/Ikura%20Hub"
+    "https://raw.githubusercontent.com/Memito89/TheUltimateStealABrainrotPackageOfScripts/refs/heads/main/Ikura%20Hub",
+    "https://raw.githubusercontent.com/Memito89/TheUltimateStealABrainrotPackageOfScripts/refs/heads/main/fmly%20detector.lua.txt"
 }
 
--- Download both scripts concurrently first
+-- Download and execute remaining scripts concurrently
 for _, url in ipairs(urls) do
     task.spawn(function()
         local success, code = pcall(function()
